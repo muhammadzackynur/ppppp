@@ -10,6 +10,7 @@ use App\Filament\Resources\JenisMakananResource\Api\Transformers\JenisMakananTra
 class PaginationHandler extends Handlers {
     public static string | null $uri = '/';
     public static string | null $resource = JenisMakananResource::class;
+     public static bool $public = true;
 
 
     /**

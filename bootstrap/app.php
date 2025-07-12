@@ -1,13 +1,15 @@
 <?php
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Auth\AuthenticationException; // <-- PENTING: Pastikan baris ini ada
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
+        // api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
@@ -15,17 +17,17 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        
-        // PENDEKATAN BARU: Menggunakan method unauthenticated()
-        // Ini lebih spesifik dan seharusnya lebih kuat
-        $exceptions->unauthenticated(function ($request, AuthenticationException $e) {
-            // Jika request ditujukan untuk API, kembalikan response JSON
-            if ($request->is('api/*')) {
-                return response()->json(
-                    ['message' => 'Unauthenticated.'], 
-                    401
-                );
+        // Penanganan untuk pengguna yang belum login (unauthenticated)
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
+            // Jika permintaan adalah API atau mengharapkan JSON (misalnya pakai Postman)
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Unauthenticated. Silakan login atau gunakan API token yang valid.'
+                ], 401);
             }
-        });
 
-    })->create();
+            // Untuk permintaan web biasa, redirect langsung ke /admin/login
+            return redirect()->guest('/admin/login');
+        });
+    })
+    ->create();

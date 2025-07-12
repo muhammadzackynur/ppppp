@@ -1,22 +1,19 @@
 <?php
-namespace App\Filament\Resources\JenisOlahragaResource\Api\Handlers;
+namespace App\Filament\Resources\JadwalOlahragaResource\Api\Handlers;
 
 use Illuminate\Http\Request;
 use Rupadana\ApiService\Http\Handlers;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Filament\Resources\JenisOlahragaResource;
-use App\Filament\Resources\JenisOlahragaResource\Api\Transformers\JenisOlahragaTransformer;
+use App\Filament\Resources\JadwalOlahragaResource;
+use App\Filament\Resources\JadwalOlahragaResource\Api\Transformers\JadwalOlahragaTransformer;
 
 class PaginationHandler extends Handlers {
     public static string | null $uri = '/';
-    public static string | null $resource = JenisOlahragaResource::class;
-     public static bool $public = true;
-
-
-
+    public static string | null $resource = JadwalOlahragaResource::class;
+    public static bool $public = true;
 
     /**
-     * List of JenisOlahraga
+     * List of JadwalOlahraga
      *
      * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
@@ -33,6 +30,6 @@ class PaginationHandler extends Handlers {
         ->paginate(request()->query('per_page'))
         ->appends(request()->query());
 
-        return JenisOlahragaTransformer::collection($query);
+        return JadwalOlahragaTransformer::collection($query);
     }
 }

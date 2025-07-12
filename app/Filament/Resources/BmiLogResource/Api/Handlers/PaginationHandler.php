@@ -1,22 +1,20 @@
 <?php
-namespace App\Filament\Resources\JenisOlahragaResource\Api\Handlers;
+namespace App\Filament\Resources\BmiLogResource\Api\Handlers;
 
 use Illuminate\Http\Request;
 use Rupadana\ApiService\Http\Handlers;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Filament\Resources\JenisOlahragaResource;
-use App\Filament\Resources\JenisOlahragaResource\Api\Transformers\JenisOlahragaTransformer;
+use App\Filament\Resources\BmiLogResource;
+use App\Filament\Resources\BmiLogResource\Api\Transformers\BmiLogTransformer;
 
 class PaginationHandler extends Handlers {
     public static string | null $uri = '/';
-    public static string | null $resource = JenisOlahragaResource::class;
-     public static bool $public = true;
-
-
+    public static string | null $resource = BmiLogResource::class;
+    public static bool $public = true;
 
 
     /**
-     * List of JenisOlahraga
+     * List of BmiLog
      *
      * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
@@ -33,6 +31,6 @@ class PaginationHandler extends Handlers {
         ->paginate(request()->query('per_page'))
         ->appends(request()->query());
 
-        return JenisOlahragaTransformer::collection($query);
+        return BmiLogTransformer::collection($query);
     }
 }
