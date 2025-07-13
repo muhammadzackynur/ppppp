@@ -1,15 +1,11 @@
 <?php
+
 namespace App\Filament\Resources\JenisOlahragaResource\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\JenisOlahraga;
 
-/**
- * @property JenisOlahraga $resource
- */
 class JenisOlahragaTransformer extends JsonResource
 {
-
     /**
      * Transform the resource into an array.
      *
@@ -18,6 +14,18 @@ class JenisOlahragaTransformer extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->resource->toArray();
+        return [
+            'id' => $this->id,
+            'nama' => $this->nama,
+            'image' => $this->image,
+
+            // PASTIKAN BARIS INI ADA:
+            // Ganti 'kalori_per_jam' jika nama kolom di database Anda berbeda.
+            'kalori_per_jam' => $this->kalori_per_jam,
+
+            // Anda juga bisa menambahkan data lain jika perlu
+            'kategori' => $this->kategori,
+            'durasi_menit' => $this->durasi_menit,
+        ];
     }
 }

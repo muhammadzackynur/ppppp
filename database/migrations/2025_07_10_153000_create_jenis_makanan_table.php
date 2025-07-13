@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenis_olahraga', function (Blueprint $table) {
+        Schema::create('jenis_makanan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->text('deskripsi')->nullable();
-            $table->string('image')->nullable(); // <-- TAMBAHKAN BARIS INI
-            $table->enum('kategori', ['Kardio', 'Kekuatan', 'Fleksibilitas', 'keseimbangan', 'keterampilan/rekreasi']);
-            $table->integer('durasi_menit')->nullable();
-            $table->timestamps(); // Menggantikan created_at dan updated_at
+            $table->string('image')->nullable();
+            $table->integer('kalori_per_porsi')->nullable();
+            $table->enum('kategori', ['Sarapan', 'Makan Siang', 'Makan Malam', 'Camilan']);
+            $table->enum('cocok_untuk_diet', ['Rendah Karbo', 'Rendah Lemak', 'Vegan', 'Normal'])->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis_olahraga');
+        Schema::dropIfExists('jenis_makanan');
     }
 };

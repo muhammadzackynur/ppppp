@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // --- PERBAIKAN UTAMA DI SINI ---
+        // Menambahkan kembali guard 'api' yang hilang, yang diperlukan oleh Sanctum.
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
